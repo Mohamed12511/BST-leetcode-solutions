@@ -1,0 +1,32 @@
+// Problem: Search for a node with a specific value in a Binary Search Tree (BST).
+// Approach:
+//          - Traverse the tree recursively to find the node with the specified value.
+//          - Once the node is found, return the subtree rooted at that node.
+// Time Complexity: O(h), where h is the height of the tree.
+//                  The search might traverse down to the deepest node in the tree.
+// Space Complexity: O(h), due to the recursive call stack, where h is the height of the tree.
+
+class Solution {
+public:
+    int flag = -1;
+    void PrintAllSubtreesRelatedToTheVal(TreeNode* root, int val, TreeNode*& SubTree) {
+        if (root == NULL) return;
+        if (root->val == val) {
+            SubTree = root;
+            return;
+        }
+        PrintAllSubtreesRelatedToTheVal(root->left, val, SubTree);
+        PrintAllSubtreesRelatedToTheVal(root->right, val, SubTree);
+    }
+
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if (root == NULL) return NULL;
+        if (root->val == val) return root;
+        TreeNode* SubTree = NULL;
+        if (val < root->val)
+            PrintAllSubtreesRelatedToTheVal(root->left, val, SubTree);
+        else 
+            PrintAllSubtreesRelatedToTheVal(root->right, val, SubTree);
+        return SubTree;
+    }
+};
