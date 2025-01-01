@@ -1,0 +1,24 @@
+// Problem: Preorder Traversal of a Binary Tree.
+// Approach:
+//          - Use a recursive approach to traverse the tree in preorder (root, left, right).
+//          - Start by visiting the root node and add its value to the result vector.
+//          - Recursively visit the left subtree, followed by the right subtree.
+// Time Complexity: O(n), where n is the number of nodes in the tree.
+//                  Each node is visited once during the recursion.
+// Space Complexity: O(n), where n is the number of nodes in the tree, due to the space used by the result vector and the recursive call stack.
+
+class Solution {
+public:
+    void preorderHelper(TreeNode* root, vector<int>& v) {
+        if (root == nullptr) return;
+        v.push_back(root->val);
+        preorderHelper(root->left, v);
+        preorderHelper(root->right, v);
+    }
+
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> v;
+        preorderHelper(root, v);
+        return v;
+    }
+};
