@@ -1,0 +1,37 @@
+// Problem: Find all paths from the root to the leaf nodes in a binary tree.
+// Approach:
+//          - Use depth-first search (DFS) to traverse the tree.
+//          - For each node, build a path string that represents the current path from the root to that node.
+//          - If a node is a leaf, add the path to the result vector.
+// Time Complexity: O(n), where n is the number of nodes in the tree.
+//                  Each node is visited once during the DFS traversal.
+// Space Complexity: O(h), where h is the height of the tree, due to the recursive call stack.
+
+#include <string>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    void Process(TreeNode* root, string Path, vector<string>& v) {
+        if (root == NULL) return;
+
+        Path += to_string(root->val);
+        if (root->right == NULL && root->left == NULL)
+            v.push_back(Path);
+        else {
+            Path += "->";
+            Process(root->left, Path, v);
+            Process(root->right, Path, v);
+        }
+    }
+
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> s;
+        if (root == NULL) {
+            return s;
+        }
+        Process(root, "", s);
+        return s;
+    }
+};
