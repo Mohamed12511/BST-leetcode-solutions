@@ -1,0 +1,42 @@
+// Problem: Count the number of nodes in a complete binary tree.
+// Approach:
+//          - The tree is a complete binary tree, so if the left and right subtree heights are equal, 
+//            the number of nodes is a perfect power of 2 minus 1 (2^h - 1).
+//          - If the heights of the left and right subtrees are not equal, recursively count the nodes 
+//            in the left and right subtrees.
+// Time Complexity: O(log^2 n), where n is the number of nodes in the tree.
+//                  In the worst case, we traverse the height of the tree twice for each node.
+// Space Complexity: O(h), where h is the height of the tree, due to the recursive call stack.
+
+class Solution {
+    int RightLevel(TreeNode* root) {
+        int count = 0;
+        while (root != NULL) {
+            count++;
+            root = root->right;
+        }
+        return count;
+    }
+
+    int LeftLevel(TreeNode* root) {
+        int count = 0;
+        while (root != NULL) {
+            count++;
+            root = root->left;
+        }
+        return count;
+    }
+
+public:
+    int countNodes(TreeNode* root) {
+        if (root == NULL) return 0;
+        int Left = LeftLevel(root);
+        int Right = RightLevel(root);
+        if (Left == Right) {
+            return pow(2, Left) - 1;
+        }
+        else {
+            return 1 + countNodes(root->left) + countNodes(root->right);
+        }
+    }
+};
