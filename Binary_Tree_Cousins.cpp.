@@ -1,0 +1,41 @@
+// Problem: Check if two nodes are cousins in a binary tree
+// Source: LeetCode
+
+// Problem Description:
+// Given a binary tree and two integers x and y, return true if the nodes corresponding to x and y in the binary tree are cousins.
+// Two nodes are cousins if they have the same depth but different parents.
+
+// Approach:
+// 1. We first find the parents and depths of both nodes.
+// 2. Then, we compare their depths and check if they have different parents.
+// 3. If they meet both conditions, return true, otherwise return false.
+// Code 
+class Solution {
+public:  
+
+    TreeNode*Depth(TreeNode*r,int value,int& D,int height){
+        if(r==NULL) return NULL;
+         if(r->left&&r->left->val==value){
+            D=height+1;
+            return r;
+        }
+
+        if(r->right&&r->right->val==value){
+            D=height+1;
+            return r;
+        }
+       
+        TreeNode*Left= Depth(r->left,value,D,height+1);
+        if(Left)return Left;
+        return Depth(r->right,value,D,height+1);
+
+    }
+      
+    bool isCousins(TreeNode* root, int x, int y) {
+       int xDepth=-1; int yDepth=-1;
+       TreeNode*Parentl=Depth(root,x,xDepth,0);
+        TreeNode*Parentr=Depth(root,y,yDepth,0);
+        if(xDepth==-1&&yDepth==-1) return false ;
+    return (xDepth==yDepth&&Parentr!=Parentl);
+    }
+};
