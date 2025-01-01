@@ -1,0 +1,28 @@
+// Problem: Determine if a binary tree is a univalued tree.
+//          A binary tree is univalued if all of its nodes have the same value.
+
+// Approach:
+//          - Use a set to store unique values from the binary tree during traversal.
+//          - If the size of the set is 1, all nodes have the same value, and the tree is univalued.
+//          - Otherwise, the tree is not univalued.
+
+// Time Complexity: O(n), where n is the number of nodes in the tree.
+//                  Each node is visited once.
+// Space Complexity: O(n), due to the space used by the set to store unique values.
+
+class Solution {
+public:
+    void  PutAllNumbersInSet(TreeNode*root,set<int>&st){
+        if(root==NULL)return;
+        st.insert(root->val);
+
+        PutAllNumbersInSet(root->left,st);
+        PutAllNumbersInSet(root->right,st);
+      }
+    bool isUnivalTree(TreeNode* root) {
+        set<int>st;  // unique values 
+        PutAllNumbersInSet(root,st);
+        if(st.size()==1)return true;
+        return false;
+    }
+};
