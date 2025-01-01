@@ -1,0 +1,43 @@
+// Problem: Calculate the sum of all node values in a Binary Search Tree (BST) that lie within a specified range [low, high].
+
+// Approach:
+//          - Perform a recursive in-order traversal of the BST.
+//          - During the traversal, check if each node's value falls within the range [low, high].
+//          - If the value is within the range, add it to the sum.
+//          - Use BST properties to optimize the traversal:
+//               - If the current node's value is less than 'low', only traverse the right subtree.
+//               - If the current node's value is greater than 'high', only traverse the left subtree.
+//               - Otherwise, travers
+
+// Time Complexity: O(n) in the worst case, where n is the number of nodes in the tree.
+//                  Optimized to O(h) for balanced trees with large ranges, where h is the height of the tree.
+// Space Complexity: O(h) due to the recursive call stack.
+
+class Solution {
+public:
+      // InOrder
+     void   CalculateNumbersInTheRange(TreeNode*root,int low,int high,int &SumOfNumbers){
+        if(root==NULL)return ; 
+        if(root->val>=low&&root->val<=high) SumOfNumbers+=root->val; 
+        CalculateNumbersInTheRange(root->left,low,high,SumOfNumbers); //chek in the left
+         CalculateNumbersInTheRange(root->right,low,high,SumOfNumbers);// chek in the right
+     }
+    int rangeSumBST(TreeNode* root, int low, int high) {
+        if(root==NULL)return 0;
+        int Sum_Of_Numbers=0;
+     //  that bst if the root->val<= will be all numbers in right just
+        if(root->val<=low){  
+             CalculateNumbersInTheRange(root->right,low,high,Sum_Of_Numbers);
+             if(root->val==low){   // we send the roat->right and did not calculate the roat
+                Sum_Of_Numbers+=root->val;
+             }
+        }
+
+       else  if(root->val>high) // if(root->val>hig) you will search in the left just
+        CalculateNumbersInTheRange(root->left,low,high,Sum_Of_Numbers);
+
+        else   // if in left and right the range 
+          CalculateNumbersInTheRange(root,low,high,Sum_Of_Numbers);
+        return Sum_Of_Numbers;
+    }
+};
