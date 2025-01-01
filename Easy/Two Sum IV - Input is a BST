@@ -1,0 +1,29 @@
+// Problem: Check if there exist two elements in a Binary Search Tree (BST) such that their sum equals a given value `k`.
+// Approach:
+//          - Use a map to store visited node values.
+//          - Traverse the BST in any order (preorder here).
+//          - For each node, check if the complement `(k - current value)` exists in the map.
+//          - If found, set `isFound` to true.
+// Time Complexity: O(n), where n is the number of nodes in the tree.
+//                  Each node is visited once.
+// Space Complexity: O(n), due to the map used to store node values.
+
+#include <map>
+using namespace std;
+
+class Solution {
+    map<int, bool> valueMap;
+    bool isFound = false;
+
+public:
+    bool searchForTarget(TreeNode* root, int k) {
+        if (isFound) return true; // Exit early if pair is found
+        if (root) {
+            isFound = valueMap.find(k - root->val) != valueMap.end(); // Check for complement
+            valueMap[root->val] = true; // Store current node value
+            searchForTarget(root->left, k); // Recursive search on left subtree
+            searchForTarget(root->right, k); // Recursive search on right subtree
+        }
+        return isFound;
+    }
+};
