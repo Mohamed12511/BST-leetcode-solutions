@@ -1,0 +1,24 @@
+// Problem: Given a binary search tree (BST), return a new tree where the nodes are rearranged 
+// in an increasing order (i.e., as a right-skewed tree). 
+Perform an in-order traversal of the tree to visit nodes in ascending order.
+//          - As we traverse, create new nodes and link them as the right child of the previous node 
+//            in the newly constructed tree.
+//          - The new tree will be sorted in increasing order of values from left to right.
+// Time Complexity: O(n), where n is the number of nodes in the tree.
+//                  Each node is visited exactly once during the in-order traversal.
+class Solution {
+public:
+    void InOrder(TreeNode*root,TreeNode*&cur){
+        if(root==NULL)return; 
+        InOrder(root->left,cur);  
+        cur->right=new TreeNode(root->val);  // create new node
+        cur=cur->right;  // to link the tree 
+        InOrder(root->right,cur);
+    }
+    TreeNode* increasingBST(TreeNode* root) {
+        TreeNode*newroot=new TreeNode(0);// first node 
+        TreeNode*cur=newroot; // newTree
+        InOrder(root,cur);
+        return newroot->right;// after first node
+    }
+};
