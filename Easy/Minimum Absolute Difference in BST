@@ -1,0 +1,44 @@
+/**
+ * Problem: Find Minimum Absolute Difference in a Binary Search Tree (BST)
+ * 
+ * The task is to find the minimum absolute difference between the values of any two nodes in the Binary Search Tree.
+ * 
+ * Approach:
+ * 1. Perform an in-order traversal of the BST, which gives the values of nodes in sorted order.
+ * 2. After performing the traversal, compute the difference between each consecutive pair of values.
+ * 3. The minimum difference among these values is the answer.
+ * 
+ * This method leverages the property of the BST where the in-order traversal produces values in increasing order.
+ * 
+ * Time Complexity: O(N), where N is the number of nodes in the tree.
+ * Space Complexity: O(N) for storing the values in a vector during traversal.
+ *Code 
+
+
+class Solution {
+public:
+
+     void TreeToVector(TreeNode*root,vector<int>&res){
+     if(root==NULL)return ;
+     TreeToVector(root->left,res);
+     res.push_back(root->val);
+     TreeToVector(root->right,res);
+     }
+    int getMinimumDifference(TreeNode* root) {
+        int result=INT_MAX;
+        vector<int>v;
+           vector<int>res;
+        TreeToVector(root,v);
+     
+        for(int i=0;i<v.size()-1;i++){
+            res.push_back(abs(v[i]-v[i+1]));
+        }
+        for(int i=0;i<res.size();i++){
+            if(res[i]<result){
+                result=res[i];
+            }
+        }
+        return result;
+
+    }
+};
