@@ -1,0 +1,38 @@
+// Problem: Find all modes (the most frequent elements) in a Binary Search Tree (BST).
+// Approach:
+//          - Traverse the tree to count the frequency of each node's value using a frequency map.
+//          - Find the maximum frequency and collect all values that have this frequency.
+
+// Time Complexity: O(n), where n is the number of nodes in the tree.
+//                  Each node is visited once during traversal and frequency counting.
+// Space Complexity: O(n), due to the space used by the map to store the frequency of each unique value.
+
+class Solution {
+public:
+    void SearchAboutMode(TreeNode*root, map<int,int>&frequencymap){
+        if(root==NULL)return;
+        frequencymap[root->val]++; // count 
+
+        SearchAboutMode(root->left,frequencymap);
+        SearchAboutMode(root->right,frequencymap);
+
+    }
+    vector<int> findMode(TreeNode* root) {
+    map<int,int>m;
+    SearchAboutMode(root,m);
+         int maxFrequency = -1;
+
+       for(auto num:m){
+        if(num.second>=maxFrequency){
+            maxFrequency=num.second;  // get max count
+        }
+       }
+       
+       vector<int>v; 
+       for(auto num:m){  //if there are max count
+        if(num.second==maxFrequency)
+        v.push_back(num.first);
+       }
+       return v;
+    }
+};
