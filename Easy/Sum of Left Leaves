@@ -1,0 +1,27 @@
+// Problem: Calculate the sum of all left leaf nodes in a binary tree.
+// Approach:
+//          - Traverse the tree recursively to identify left leaf nodes.
+//          - If a node's left child is a leaf (no left or right child), add its value to the sum.
+// Time Complexity: O(h), where h is the height of the tree.
+//                  The algorithm traverses all nodes in the worst case, visiting each once.
+// Space Complexity: O(h), due to the recursive call stack, where h is the height of the tree.
+
+class Solution {
+public:
+       // PreOrder
+     void CalculateSumOfLeftNodes(TreeNode*root,int &SumOfLeftNodes){
+       if(root==NULL)return ; //  leafNode->left or right
+
+       if(root->left&&!root->left->right&&!root->left->left) 
+       SumOfLeftNodes+=root->left->val;
+       
+       CalculateSumOfLeftNodes(root->left,SumOfLeftNodes);//traversal
+        CalculateSumOfLeftNodes(root->right,SumOfLeftNodes);
+     }
+    int sumOfLeftLeaves(TreeNode* root) {
+        if(!root)return 0; 
+        int SumOfLeftNodes=0;
+        CalculateSumOfLeftNodes(root,SumOfLeftNodes);
+        return SumOfLeftNodes;  // some left leaf Nodes
+    }
+};
