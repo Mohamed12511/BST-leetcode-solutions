@@ -1,0 +1,29 @@
+// Problem: Find the corresponding node in a cloned binary tree.
+//          Given two binary trees, `original` and `cloned`, which are identical in structure and values, 
+//          locate the node in the `cloned` tree that corresponds to a target node in the `original` tree.
+
+// Approach:
+//          - Perform a recursive traversal of both the original and cloned trees simultaneously.
+//          - Compare the current node in the `original` tree with the target node.
+//          - Once the target node is found in the `original` tree, return the corresponding node from the `cloned` tree.
+
+// Time Complexity: O(n), where n is the number of nodes in the binary tree.
+//                  This is because, in the worst case, all nodes in the tree are visited.
+// Space Complexity: O(h), where h is the height of the tree, due to the recursive call stack.
+
+class Solution {
+public:
+    TreeNode* Search(TreeNode*cloned,TreeNode*&target,TreeNode*original){
+        if(original==NULL) return NULL;
+        if(target==original)return cloned;
+     TreeNode*leftSearch=Search(cloned->left,target,original->left);
+     if(leftSearch!=NULL)return leftSearch; // left Search will be the cloned
+
+     return Search(cloned->right,target,original->right); 
+         
+    }
+    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+       return  Search(cloned,target,original);
+     
+    }
+};
