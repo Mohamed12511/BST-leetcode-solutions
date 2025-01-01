@@ -1,0 +1,28 @@
+// Problem: Find the minimum absolute difference between values of any two nodes in a Binary Search Tree (BST).
+// Approach:
+//          - Perform an inorder traversal of the BST to retrieve the values in sorted order.
+//          - Then, calculate the minimum absolute difference between adjacent values.
+// Time Complexity: O(n), where n is the number of nodes in the tree.
+//                  The inorder traversal visits each node once.
+// Space Complexity: O(n), where n is the number of nodes in the tree, to store the node values.
+
+class Solution {
+public:
+    void Inorder(TreeNode* root, vector<int>& v) {
+        if (root == NULL) return;
+        Inorder(root->left, v);
+        v.push_back(root->val);
+        Inorder(root->right, v);
+    }
+
+    int minDiffInBST(TreeNode* root) {
+        vector<int> v;
+        Inorder(root, v);
+        int min = INT_MAX;
+        for (int i = 0; i < v.size() - 1; i++) {
+            int x = abs(v[i] - v[i + 1]);
+            if (x < min) min = x;
+        }
+        return min;
+    }
+};
