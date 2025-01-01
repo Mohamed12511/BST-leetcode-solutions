@@ -1,0 +1,27 @@
+// Problem: Check if two binary trees have the same leaf sequence.
+// Approach:
+//          - Perform a DFS traversal on both trees to collect all leaf node values.
+//          - Compare the leaf sequences of the two trees to determine if they are identical.
+// Time Complexity: O(n + m), where n and m are the number of nodes in tree1 and tree2, respectively.
+//                  Each tree is traversed once.
+// Space Complexity: O(n + m), where n and m are the number of nodes in tree1 and tree2, respectively,
+//                  due to the space required to store the leaf sequences.
+
+class Solution {
+public:
+    void DFS(TreeNode* root, vector<int>& v) {
+        if (root == NULL) return;
+        DFS(root->left, v);
+        if (!root->left && !root->right) v.push_back(root->val);
+        DFS(root->right, v);
+    }
+
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        vector<int> v1;
+        vector<int> v2;
+        DFS(root1, v1);
+        DFS(root2, v2);
+        if (v1 == v2) return true;
+        return false;
+    }
+};
