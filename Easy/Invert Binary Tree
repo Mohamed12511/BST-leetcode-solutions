@@ -1,0 +1,21 @@
+// Problem: Invert a binary tree.
+// Approach:
+//          - Swap the left and right child nodes recursively for every node in the tree.
+// Time Complexity: O(n), where n is the number of nodes in the tree.
+//                  Each node is visited once during the recursion.
+// Space Complexity: O(h), where h is the height of the tree, due to the recursive call stack.
+
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if (root == NULL) {
+            return NULL;
+        }
+        TreeNode* temp = root->left;
+        root->left = root->right;
+        root->right = temp;
+        invertTree(root->left);
+        invertTree(root->right);
+        return root;
+    }
+};
