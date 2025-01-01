@@ -1,0 +1,21 @@
+// Problem: Find the second minimum value in a binary tree.
+// Approach:
+//          - Use depth-first search (DFS) to traverse the tree.
+//          - If a node's value is different from the root's value, it is a potential second minimum value.
+//          - Track the smallest such value that is greater than the root's value.
+// Time Complexity: O(n), where n is the number of nodes in the tree.
+//                  Each node is visited once during the DFS traversal.
+// Space Complexity: O(h), where h is the height of the tree, due to the recursive call stack.
+
+class Solution {
+public:
+    int findSecondMinimumValue(TreeNode* root) {
+        if (!root || !root->left || !root->right) {
+            return -1;
+        }
+        int FirstMin = root->val;
+        int SecondMin = -1;
+        function<void(TreeNode*)> dfs = [&](TreeNode* root) {
+            if (!root) return;
+            if (FirstMin != root->val) {
+                if (SecondMin > root-
