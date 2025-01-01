@@ -1,0 +1,12 @@
+// Problem: Check if the value of the root node is equal to the sum of the values of its left and right child nodes.
+// Approach:
+//          - Simply check if the sum of the left and right child values is equal to the value of the root.
+// Time Complexity: O(1), as we are only accessing and comparing the values of a few nodes.
+// Space Complexity: O(1), since we are using only a constant amount of space.
+
+class Solution {
+public:
+    bool checkTree(TreeNode* root) {
+        return (root->left->val + root->right->val == root->val);
+    }
+};
