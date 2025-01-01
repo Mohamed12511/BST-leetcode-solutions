@@ -1,0 +1,28 @@
+// Problem: Evaluate the logical value of a binary tree where each node represents a logical operation.
+// Approach:
+//          - Recursively evaluate the left and right subtrees based on the current node's value:
+//            - 0 represents false,
+//            - 1 represents true,
+//            - 2 represents OR operation,
+//            - 3 represents AND operation.
+// Time Complexity: O(n), where n is the number of nodes, as we visit each node once during the recursion.
+// Space Complexity: O(h), where h is the height of the tree, due to the recursive call stack.
+
+class Solution {
+public:
+    bool answer(TreeNode* root) {
+        if (root == NULL) return false;
+        int Left = answer(root->left);
+        int Right = answer(root->right);
+        if (root->val == 2) {
+            return Left || Right;
+        } else if (root->val == 3) {
+            return Right && Left;
+        }
+        return (root->val == 0) ? false : true;
+    }
+
+    bool evaluateTree(TreeNode* root) {
+        return answer(root);
+    }
+};
