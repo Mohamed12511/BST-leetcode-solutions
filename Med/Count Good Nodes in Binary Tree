@@ -1,0 +1,26 @@
+The goal is to count the number of good nodes in a binary tree.
+A node is considered good  
+if, on the path from the root to that node, its value is greater than or equal to all previously encountered node values.
+
+Approach:
+The solution uses a recursive depth-first search (DFS) traversal to traverse the tree and count the number of good nodes.
+
+class Solution {
+public:
+    void CountgoodNodes(TreeNode*root,int val,int &count){ 
+        if(root==NULL)return ;
+        if(root->val>=val){ 
+            count++; val=root->val;
+        }
+        CountgoodNodes(root->left,val,count);
+        CountgoodNodes(root->right,val,count);
+    }
+    int goodNodes(TreeNode* root) {
+        if(root==NULL)return 0;
+        int count=0;
+        int val=root->val;
+        CountgoodNodes(root,val,count);
+        return count;
+        
+    }
+};
