@@ -1,0 +1,32 @@
+// Problem: Given the root of a binary tree, find the leftmost value in the last row of the tree.
+//
+// Approach:
+//          - Perform a level-order traversal (BFS) of the tree using a queue.
+//          - For each level, update the leftmost value (the value of the first node in the level).
+//          - Continue until all levels are traversed. The last updated leftmost value is the desired result.
+//
+// Time Complexity: O(n), where n is the number of nodes in the tree. Each node is visited once.
+// Space Complexity: O(w), where w is the maximum width of the tree. This represents the size of the queue at its peak.
+
+class Solution {
+public:
+
+    int findBottomLeftValue(TreeNode* root) {
+       if(!root) return -1; // base case
+       queue<TreeNode*>q;  
+       int bottomLeftVal=0;
+       q.push(root);
+       while(!q.empty()){
+        int size=q.size();
+        for(int i=0;i<size;i++){
+            TreeNode* current=q.front();
+            q.pop();
+            if(i==0) bottomLeftVal=current->val;
+
+            if(current->left)q.push(current->left);
+            if(current->right)q.push(current->right);
+        }
+       }
+       return bottomLeftVal;
+    }
+};
