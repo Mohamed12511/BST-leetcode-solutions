@@ -1,0 +1,56 @@
+/**
+ * Problem: Retrieve all elements from two Binary Search Trees (BSTs) and return them in a single sorted list.
+ * 
+ * Task:
+ * - Given the roots of two Binary Search Trees, `root1` and `root2`, merge all their elements into a single sorted list.
+ * - This problem involves:
+ *    1. Extracting the elements of each tree in sorted order.
+ *    2. Merging the two sorted lists into one.
+ * 
+ * Approach:
+ * 1. Perform in-order traversal of both BSTs to retrieve their elements in sorted order.
+ * 2. Use a two-pointer technique to merge the two sorted lists into one.
+ * 
+ * Time Complexity:
+ * - O(N + M), where N is the number of nodes in `root1` and M is the number of nodes in `root2`.
+ *   - In-order traversal of both trees takes O(N) and O(M), respectively.
+ *   - Merging the two sorted lists takes O(N + M).
+ * 
+ * Space Complexity:
+ * - O(N + M), to store the elements of both BSTs and the merged result.
+ */
+
+class Solution {
+public:
+     void IN_order(vector<int>&v,TreeNode*root){
+      if(root==NULL)return ;
+         IN_order(v,root->left);
+         v.push_back(root->val);
+         IN_order(v,root->right);
+     }
+     void Merge(vector<int>v1,vector<int>v2,vector<int>&res){
+        int i=0,j=0;
+        while(i!=v1.size()&&j!=v2.size()){
+            if(v1[i]<v2[j]){
+                res.push_back(v1[i]);
+                i++;
+            }
+            else{ res.push_back(v2[j]);j++;}
+        }
+        while(i!=v1.size()){
+            res.push_back(v1[i]);
+            i++;
+        }
+        while(j!=v2.size()){
+            res.push_back(v2[j]);
+            j++;
+        }
+     }
+    vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
+        vector<int>v1; vector<int>v2;  vector<int>res;
+         IN_order(v1,root1);
+         IN_order(v2,root2);
+         Merge(v1,v2,res);
+        return res;;
+    }
+};
