@@ -1,0 +1,45 @@
+// Problem: Find the largest value in each row of a binary tree.
+//
+// Approach:
+//          - Perform a level-order traversal (BFS) of the tree using a queue.
+//          - For each level, determine the largest value by iterating through all the nodes in that level.
+//          - Store the largest value for each level in a result vector.
+//          - Return the result vector containing the largest values from each level.
+//
+// Time Complexity: O(n), where n is the number of nodes in the tree. Each node is visited once.
+// Space Complexity: O(w), where w is the maximum width of the tree. This represents the size of the queue at its peak.
+
+class Solution {
+public:
+     void BFS(TreeNode*root,vector<int>&largestNumbers){
+         queue<TreeNode*>q;  // level by level
+       
+        q.push(root);
+        while(!q.empty()){
+             int size=q.size();
+            int largest_NumberIntheLevel=INT_MIN;  
+           for(int i=0;i<size;i++){
+            TreeNode*current=q.front();
+            q.pop();
+            if(current->val>largest_NumberIntheLevel)largest_NumberIntheLevel=current->val;
+ 
+             if(i==size-1) largestNumbers.push_back(largest_NumberIntheLevel);  // the last loop 
+
+            if(current->left)q.push(current->left);
+            if(current->right)q.push(current->right);
+           }
+          
+             
+        }
+
+     }
+    vector<int> largestValues(TreeNode* root) {
+      vector<int>lergestNumbers;
+
+      if(root==NULL)return lergestNumbers;
+ 
+      BFS(root,lergestNumbers);  // get largestNumbers in every level
+
+      return lergestNumbers;
+    }
+};
