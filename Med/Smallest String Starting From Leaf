@@ -1,0 +1,38 @@
+// Problem: Find the lexicographically smallest string starting from a leaf to the root of a binary tree.
+//
+// Approach:
+//          - Perform a Depth-First Search (DFS) to traverse all paths from leaves to the root.
+//          - At each leaf node, reverse the accumulated string and compare it to the current smallest string.
+//          - Update the smallest string if the current path string is lexicographically smaller.
+//          - Return the lexicographically smallest string.
+//
+// Key Details:
+//          - Each node's value is mapped to a character (`'a' + node->val`), where 0 maps to 'a', 1 maps to 'b', and so on.
+//          - Reversing the string at the leaf node simulates the path from the leaf to the root.
+//          - Use a global variable to track the smallest string found so far.
+//
+// Time Complexity: O(n), where n is the number of nodes in the tree. Each node is visited once.
+// Space Complexity: O(h), where h is the height of the tree. This represents the recursive stack space.
+
+class Solution {
+public:
+    string SmallestString="";
+     void DFS(TreeNode*root,string s){
+        if(root==NULL)return ;
+        s+='a'+root->val;
+        if(!root->left&&!root->right){
+            reverse(s.begin(),s.end()); 
+            if(SmallestString=="") SmallestString=s;
+            else 
+         SmallestString=min(SmallestString,s);
+        }
+        DFS(root->left,s);
+        DFS(root->right,s);
+        s.pop_back();
+     }
+    string smallestFromLeaf(TreeNode* root) {
+        string s="";
+        DFS(root,s);
+        return SmallestString;
+    }
+};
