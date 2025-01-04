@@ -1,0 +1,38 @@
+* Problem: Insert a new value into a Maximum Binary Tree and return the updated tree.
+ *          - A Maximum Binary Tree is a binary tree where:
+ *              - The root is the maximum value in the array.
+ *              - The left subtree is built from elements to the left of the maximum.
+ *              - The right subtree is built from elements to the right of the maximum.
+ * 
+ * Approach:
+ *          - If the new value is greater than the current root value:
+ *              - Create a new node with the new value as the root.
+ *              - Set the existing tree as the left child of the new root.
+ *          - Otherwise:
+ *              - Recursively traverse the right subtree to find the correct position.
+ *              - If no right subtree exists, insert the new value as the right child.
+ * 
+ * Time Complexity: O(h), where h is the height of the tree.
+ * Space Complexity: O(h), considering the recursive stack space.
+ */
+
+class Solution {
+public:
+  
+    TreeNode* insertIntoMaxTree(TreeNode* root, int val) {
+        if(val>root->val){
+            TreeNode *NewNode=new TreeNode(val);
+            NewNode->left=root;
+            return NewNode;
+        }
+        if(root->right){
+            root->right=insertIntoMaxTree(root->right,val);
+        }
+        else {
+            root->right= new TreeNode(val);
+            
+        }
+       return root;
+        
+    }
+};
