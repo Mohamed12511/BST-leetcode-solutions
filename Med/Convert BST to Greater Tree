@@ -1,0 +1,37 @@
+/**
+ * Problem: Convert a BST into a Greater Tree.
+ *
+ * Task:
+ * - Given the root of a BST, modify the tree such that every node’s value becomes the sum of all node values greater than or equal to the original value in the tree.
+ *
+ * Approach:
+ * 1. Perform a **reverse in-order traversal** (right → root → left).
+ *    - Traverse the right subtree first since it contains larger values.
+ *    - Accumulate a running sum during traversal to compute the new values for each node.
+ *    - Update the node’s value with the current running sum.
+ * 
+ * 2. This ensures that we process nodes in descending order, accumulating their values into a cumulative sum.
+ * 
+ * Time Complexity:
+ * - O(N), where N is the number of nodes in the tree. Each node is visited once during the traversal.
+ * 
+ * Space Complexity:
+ * - O(H), where H is the height of the tree. This accounts for the recursion stack during traversal.
+ *   - O(log N) for a balanced tree, O(N) for a skewed tree.
+ */
+class Solution {
+public:
+int sum=0;
+    TreeNode*ConvertBSTtoGreaterTree(TreeNode*&root){
+        if(root==NULL)return NULL;
+        ConvertBSTtoGreaterTree(root->right);
+        sum+=root->val;
+        root->val=sum;
+        ConvertBSTtoGreaterTree(root->left);
+        return root;
+
+    }
+    TreeNode* convertBST(TreeNode* root) {
+    root=ConvertBSTtoGreaterTree(root);
+   return root;
+    }
