@@ -1,0 +1,69 @@
+// Problem: Given a binary search tree (BST) and a list of queries, for each query, find the 
+// closest nodes in the BST that are less than or equal to the query value, and greater than or 
+// equal to the query value.
+//
+// Approach:
+//          - First, traverse the BST in an in-order manner to obtain a sorted list of values.
+//          - For each query, use binary search to find the closest node values that are less than 
+//            or equal to the query, and greater than or equal to the query.
+//
+// Key Details:
+//          - The in-order traversal of a BST gives the values in sorted order.
+//          - Two separate binary search functions are used to find the closest smaller or equal 
+//            (`mini`) and the closest greater or equal (`Max`) nodes for each query.
+//
+// Time Complexity: O(n + q log n), where n is the number of nodes in the BST and q is the number 
+//                  of queries. The in-order traversal takes O(n), and each binary search for each 
+//                  query takes O(log n).
+// Space Complexity: O(n + q), where n is the number of nodes in the BST and q is the number of queries.
+//                   The space is used by the result vector and the temporary storage for the in-order traversal.
+
+class Solution {
+public:
+    void Traversal(vector<int>&In_Order,TreeNode*root){
+        if(root==NULL)return ;
+        Traversal(In_Order,root->left);
+        In_Order.push_back(root->val);
+        Traversal(In_Order,root->right);
+    }
+    int mini(int &val,vector<int>&Nums){
+        int l=0; int r=Nums.size()-1; int ans=-1;
+        while(l<=r){
+            int mid=(l+r)/2;
+            if(Nums[mid]<=val){
+                ans=Nums[mid];
+                l=mid+1;
+            }
+            else {
+                r=mid-1;
+            }
+        }
+        return ans;
+    }
+
+    int Max(int &val,vector<int>&Nums){
+        int l=0;  int r=Nums.size()-1; int ans=-1;
+        while(l<=r){
+            int mid=(l+r)/2;
+            if(Nums[mid]>=val){
+                ans=Nums[mid];
+                r=mid-1;
+            }
+            else l=mid+1;
+        }
+        return ans;
+    }
+    vector<vector<int>> closestNodes(TreeNode* root, vector<int>& queries) {
+       vector<int>In_Order;
+       vector<vector<int>>closestnodes;
+
+       Traversal(In_Order,root);
+
+    for(int i=0;i<queries.size();i++){
+        int Mini=mini(queries[i],In_Order);
+        int max=Max(queries[i],In_Order);
+        closestnodes.push_back({Mini,max});
+    }
+     return closestnodes;
+    }
+};
