@@ -1,0 +1,47 @@
+* Problem: Convert an unbalanced Binary Search Tree (BST) into a balanced BST.
+ * 
+ * A Binary Search Tree (BST) is balanced if the depth of the two subtrees of 
+ * every node never differs by more than 1. Balancing a BST helps improve search, 
+ * insertion, and deletion operations, ensuring their time complexities are O(log N).
+ * 
+ * Task: Given the root of a BST, transform it into a balanced BST and return the root.
+ * 
+ * Approach:
+ * 1. Perform an in-order traversal of the BST to retrieve all node values in sorted order.
+ * 2. Construct a balanced BST from the sorted values using a recursive function:
+ *    - Choose the middle element of the sorted array as the root.
+ *    - Recursively build the left subtree using the elements to the left of the middle.
+ *    - Recursively build the right subtree using the elements to the right of the middle.
+ * 3. Return the newly constructed balanced BST.
+ * 
+ * Time Complexity: O(N)
+ * - In-order traversal takes O(N) time.
+ * - Constructing the balanced BST takes O(N) time.
+ * 
+ * Space Complexity: O(N)
+ * - Space is required to store the in-order traversal result and recursive call stack.
+ */
+
+class Solution {
+public:
+   
+       void InOrder(vector<int>&v,TreeNode*root){
+        if(root==NULL)return ;
+        InOrder(v,root->left);
+         v.push_back(root->val);
+         InOrder(v,root->right);
+       }
+       TreeNode*BildAVL(vector<int>v,int start,int end){
+        if(start>end)return NULL;
+        int mid=(start+end)/2;
+        TreeNode*root=new TreeNode(v[mid]);
+        root->left=BildAVL(v,start,mid-1);
+        root->right=BildAVL(v,mid+1,end);
+        return root;
+       }
+    TreeNode* balanceBST(TreeNode* root) {
+      vector<int>In_order;
+      InOrder(In_order,root);
+    return BildAVL(In_order,0,In_order.size()-1);
+    }
+};
