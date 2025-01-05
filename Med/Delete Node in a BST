@@ -1,0 +1,43 @@
+class Solution {
+public:
+     bool Search(TreeNode*root,int key){
+        if(root==NULL)return false;
+        if(root->val==key)return true;
+        else if(key<root->val)
+          return Search(root->left,key);
+        else 
+        return Search(root->right,key);
+     }
+     TreeNode*Max(TreeNode*root){
+        if(!root)return NULL;
+        if(!root->right) return root;
+        else return Max(root->right);
+     }
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(Search(root,key)==false)return root;
+         if(root==NULL)return NULL;
+         else if(key<root->val)
+         root->left=deleteNode(root->left,key);
+         else if(key>root->val){
+            root->right=deleteNode(root->right,key);
+         }
+         else{
+            if(!root->left){
+                TreeNode*temp=root->right;
+                delete root;
+                return temp;
+            }
+            else if(!root->right){
+                TreeNode*temp=root->left;
+                delete root;
+                return temp;
+            }
+            else{
+                TreeNode*max=Max(root->left);
+                root->val=max->val;
+                root->left=deleteNode(root->left,max->val);
+            }
+         }
+         return root;
+    }
+};
