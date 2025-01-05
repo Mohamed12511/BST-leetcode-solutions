@@ -1,0 +1,55 @@
+/**
+ * Problem: Implement a Binary Search Tree (BST) Iterator
+ *
+ * Task:
+ * - Create an iterator for a BST that supports two operations:
+ *   1. `next()`: Returns the next smallest value in the BST.
+ *   2. `hasNext()`: Checks if there are more elements to iterate through.
+ *
+ * Approach:
+ * 1. **Stack-Based Traversal**:
+ *    - Use a stack to simulate an in-order traversal of the BST.
+ *    - Push all left nodes onto the stack, starting from the root.
+ *    - When `next()` is called:
+ *      - Pop the top node (smallest available value).
+ *      - If the popped node has a right subtree, push all its left descendants onto the stack.
+ *    - `hasNext()` checks if the stack is empty to determine if there are more elements.
+ *
+ * Time Complexity:
+ * - **`next()`**: O(H), where H is the height of the tree (due to pushing nodes of the right subtree).
+ * - **`hasNext()`**: O(1).
+ * - Overall: O(N) for iterating through all nodes in the BST.
+ *
+ * Space Complexity:
+ * - O(H), where H is the height of the tree, for the stack storage.
+ *
+
+
+class BSTIterator {
+    stack<TreeNode*>st;
+public:
+    void PushAllLeftNodes(TreeNode*root){
+        while(root){
+            st.push(root);
+            root=root->left;
+        }
+    }
+
+    BSTIterator(TreeNode* root) {
+       PushAllLeftNodes(root);
+    }
+    
+    int next() {
+       TreeNode*top=st.top();
+       st.pop();
+       if(top->right){
+        PushAllLeftNodes(top->right);
+       }
+       return top->val;
+        
+    }
+    
+    bool hasNext() {
+        return !st.empty();
+    }
+};
