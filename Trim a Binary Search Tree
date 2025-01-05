@@ -1,0 +1,49 @@
+/**
+ * Problem: Trim a Binary Search Tree (BST)
+ *
+ * Task:
+ * - Given the root of a BST and a range `[low, high]`, trim the tree such that all its elements lie within the given range.
+ * - A node should remain in the tree only if its value is within the range.
+ * - Adjust the children of each node accordingly to maintain the BST property.
+ *
+ * Approach:
+ * 1. **Recursive Trimming**:
+ *    - Traverse the tree recursively to examine each node.
+ *    - If a node's value is out of the range:
+ *      - If the value is less than `low`, return the right subtree (since left values are smaller and not valid).
+ *      - If the value is greater than `high`, return the left subtree (since right values are larger and not valid).
+ *    - If the value is within the range:
+ *      - Recursively trim both the left and right subtrees.
+ * 2. **Base Case**:
+ *    - If the current node is `NULL`, return `NULL`.
+ *
+ * Time Complexity:
+ * - **O(N)**, where N is the number of nodes in the tree. Every node is visited once.
+ *
+ * Space Complexity:
+ * - **O(H)**, where H is the height of the tree. This accounts for the recursion stack.
+ */
+
+
+class Solution {
+public:
+     TreeNode*trim(TreeNode*root,int low,int high){
+        if(!root)return NULL;
+        TreeNode*left=trim(root->left,low,high);
+        if(left!=root->left){
+            root->left=left;
+        }
+        TreeNode*right=trim(root->right,low,high);
+        if(right!=root->right){
+            root->right=right;
+        }
+
+        if(root->val>high||root->val<low){
+            return (root->left)?root->left:root->right;
+        }
+        return root;
+     }
+    TreeNode* trimBST(TreeNode* root, int low, int high) {
+        return trim(root,low,high);
+    }
+};
