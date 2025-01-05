@@ -1,0 +1,16 @@
+class Solution {
+public:
+     int sum=0;
+     TreeNode*ConvertBST(TreeNode*root){
+        if(root==NULL)return NULL;
+        ConvertBST(root->right);
+        sum+=root->val;
+        root->val=sum;
+        ConvertBST(root->left);
+      return root;
+     }
+    TreeNode* bstToGst(TreeNode* root) {
+        if(root==NULL)return NULL;
+        return ConvertBST(root);
+    }
+};
