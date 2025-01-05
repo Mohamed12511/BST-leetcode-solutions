@@ -1,0 +1,41 @@
+/**
+ * Problem: Construct Binary Search Tree (BST) from Preorder Traversal
+ *
+ * Task:
+ * - Given an array representing the preorder traversal of a BST, construct and return the corresponding BST.
+ *
+ * Approach:
+ * 1. **Recursive Construction**:
+ *    - Start with the root node (`preorder[0]`) and build the tree recursively.
+ *    - Use a `bound` to determine the valid range for the current subtree, ensuring the BST property.
+ * 2. **Base Case**:
+ *    - If the index `i` reaches the end of the array or the current value exceeds the `bound`, return `NULL`.
+ * 3. **Recursive Steps**:
+ *    - Create a new node for the current value.
+ *    - Recursively build the left subtree with the current node's value as the new `bound`.
+ *    - Recursively build the right subtree with the previous `bound`.
+ *
+ * Time Complexity:
+ * - **O(N)**, where N is the number of nodes in the tree. Each node is processed once.
+ *
+ * Space Complexity:
+ * - **O(H)**, where H is the height of the tree. This is the maximum depth of the recursion stack.
+ */
+
+
+class Solution {
+public:
+    TreeNode*BuildBST(vector<int>&v,int &i,int bound){
+     if(i==v.size()||v[i]>=bound)return NULL;
+
+     TreeNode*root=new TreeNode(v[i++]);
+     root->left=BuildBST(v,i,root->val);
+     root->right=BuildBST(v,i,bound);
+     return root;
+    }
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+     int i=0;
+     return BuildBST(preorder,i,INT_MAX);
+
+    }
+};
