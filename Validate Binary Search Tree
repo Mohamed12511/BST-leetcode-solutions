@@ -1,0 +1,17 @@
+class Solution {
+public:
+   
+    bool isValidBSTH(TreeNode* root, long long lower_bound, long long upper_bound) {
+       if(root==NULL)return true;
+       
+         if(root->val<=lower_bound||root->val>=upper_bound) return false;
+
+         return isValidBSTH(root->left,lower_bound,root->val)&&
+         isValidBSTH(root->right,root->val,upper_bound);
+    }
+
+   
+    bool isValidBST(TreeNode* root) {
+      return   isValidBSTH(root,LONG_MIN,LONG_MAX);
+    }
+};
